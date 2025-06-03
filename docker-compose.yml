@@ -1,0 +1,29 @@
+services:
+  mariadb:
+    container_name: mariadb
+    build:
+      context: ./mariadb
+      dockerfile: Dockerfile
+    ports:
+      - 33006:3306
+    networks:
+      - inceptions
+    restart: on-failure
+    env_file:
+      - .env
+
+  wordpress:
+    container_name: wordpress
+    build:
+      context: ./wordpress
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    ports:
+      - 9000:9000
+    networks:
+      - inceptions
+    restart: on-failure
+
+networks:
+  inceptions:
