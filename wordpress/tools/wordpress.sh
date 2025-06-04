@@ -1,4 +1,6 @@
 #!/bin/bash
 set -e
 
-echo "c est just un test webi"
+echo "debut de creations de wordpess"
+
+exec /usr/sbin/php-fpm7.4 -F
