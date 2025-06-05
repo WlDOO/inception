@@ -4,7 +4,9 @@ set -e
 # Lancement du service MariaDB (init, pas de systemd ici)
 mysqld_safe &
 
-sleep 3
+until mysqladmin ping --silent; do
+    sleep 1
+done
 
 mysql -u root <<EOF
 CREATE DATABASE IF NOT EXISTS \`${MYSQL_DATABASE}\`;

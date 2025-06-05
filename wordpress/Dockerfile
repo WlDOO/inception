@@ -1,7 +1,7 @@
 FROM debian:bullseye
 
 RUN apt-get update && apt-get install -y \
-    php php-mysql php-curl php-gd php-mbstring php-xml php-xmlrpc php-soap php-intl php-zip wget unzip \
+    php php-mysql php-curl php-gd php-mbstring php-xml php-xmlrpc php-soap php-intl php-zip wget unzip mariadb-client \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN wget https://wordpress.org/latest.zip -O /tmp/wordpress.zip \
