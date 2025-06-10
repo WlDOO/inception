@@ -4,7 +4,7 @@ set -e
 WP_DIR="/var/www/html"
 
 echo "⏳ Attente de MariaDB..."
-until mysql -h "${MYSQL_DATABASE}" -u"${MYSQL_USER}" -p"${MYSQL_PASSWORD}" -e "SELECT 1;" "${MYSQL_DATABASE}" > /dev/null 2>&1; do
+until mysql -h "${DB_HOST}" -u"${MYSQL_USER}" -p"${MYSQL_PASSWORD}" -e "SELECT 1;" "${MYSQL_DATABASE}" > /dev/null 2>&1; do
     echo "⏳ Base de données non prête, on attend encore..."
     sleep 2
 done
@@ -39,4 +39,4 @@ chown -R www-data:www-data "$WP_DIR"
 
 echo "j arrive la"
 
-exec /usr/sbin/php-fpm7.4 -F
+exec php-fpm7.4 -F

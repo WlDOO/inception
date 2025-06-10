@@ -5,12 +5,14 @@ services:
       context: ./mariadb
       dockerfile: Dockerfile
     ports:
-      - 33006:3306
+      - 3306:3306
+    volumes:
+      - wordpress_volume:/var/www/html
     networks:
       - inceptions
-    restart: on-failure
     env_file:
       - .env
+    restart: on-failure
 
   wordpress:
     container_name: wordpress
@@ -19,11 +21,28 @@ services:
       dockerfile: Dockerfile
     env_file:
       - .env
+    volumes:
+      - wordpress_volume:/var/www/html
     ports:
       - 9000:9000
     networks:
       - inceptions
     restart: on-failure
+
+volumes:
+  mariadb_volume:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/najeuneh/Desktop/docker/mariadb
+      o: bind
+
+  wordpress_volume:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/najeuneh/Desktop/docker/wordpress
+      o: bind
 
 networks:
   inceptions:
