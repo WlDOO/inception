@@ -7,7 +7,7 @@ services:
     ports:
       - 3306:3306
     volumes:
-      - wordpress_volume:/var/lib/mysql
+      - mariadb_volume:/var/lib/mysql
     networks:
       - inceptions
     env_file:
@@ -15,6 +15,8 @@ services:
     restart: on-failure
 
   wordpress:
+    depends_on:  # Ajoutez cette section
+      - mariadb
     container_name: wordpress
     build:
       context: ./wordpress
