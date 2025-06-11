@@ -1,0 +1,48 @@
+services:
+  #wordpress:  
+    #image: wordpress
+      #build:
+      #context: ./requirements/wordpress
+        #container_name: wordpress
+      #depends_on:
+      #- mariadb
+        #ports:
+      #- "9000:9000"
+        #volumes:
+      #- volume_wordpress:/var/www/html
+        #networks:
+      #- intra_network
+        #restart: always
+      # env_file: .env
+
+  mariadb:
+    image: mariadb
+    build:
+      context: ./requirements/mariadb
+    container_name: mariadb
+    ports:
+      - "3306:3306"
+    volumes:
+      - volume_mariadb:/var/lib/mysql
+    networks:
+      - intra_network
+    restart: always
+    env_file: .env
+
+volumes:
+  #volume_wordpress:
+    #driver: local
+      #driver_opts:
+      #type: none
+        #o:  bind
+        #      device: /home/najeuneh/Desktop/inception/srcs/requirements/wordpress
+  volume_mariadb:
+    driver: local
+    driver_opts:
+      type: none
+      o:  bind
+      device: /home/najeuneh/Desktop/inception/srcs/requirements/mariadb
+
+networks:
+  intra_network:
+    driver: bridge
