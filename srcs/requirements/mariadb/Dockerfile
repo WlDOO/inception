@@ -2,7 +2,7 @@ FROM debian:bullseye
 
 # Installer MariaDB
 RUN apt-get update && \
-    apt-get install -y mariadb-server
+    apt-get install -y mariadb-server mariadb-client
 
 COPY ./conf/conf.cnf /etc/mysql/mariadb.conf.d/conf.cnf
 COPY ./tools/script.sh /usr/local/bin/script.sh 
