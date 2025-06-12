@@ -1,4 +1,21 @@
 services:
+
+  nginx:
+    image: nginx
+    build:
+      context: ./requirements/nginx
+    container_name: nginx
+    depends_on: 
+      - wordpress
+    ports:
+      - "443-443"
+    volumes:
+      - volume_wordpress:/var/www/html
+    networks:
+      - intra_network
+    restart: always
+    env_file: .env
+
   wordpress:  
     image: wordpress
     build:
@@ -33,6 +50,8 @@ volumes:
   volume_wordpress:
     driver: local
   volume_mariadb:
+    driver: local
+  volume_nginx:
     driver: local
 
 networks:
