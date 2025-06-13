@@ -18,7 +18,7 @@ copy ./conf/www.conf /etc/php/7.4/fpm/pool.d/
 
 RUN mkdir -p /run/php
 
-WORKDIR /var/www/wordpress/
+WORKDIR /var/www/html/
 
 COPY ./tools/wordpress.sh /usr/local/bin/wordpress.sh
 
