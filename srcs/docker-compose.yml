@@ -49,10 +49,17 @@ services:
 volumes:
   volume_wordpress:
     driver: local
+    driver_opts:
+      type: none
+      device: /home/najeuneh/data/wordpress
+      o: bind
+
   volume_mariadb:
     driver: local
-  volume_nginx:
-    driver: local
+    driver_opts:
+      type: none
+      device: /home/najeuneh/data/mariadb
+      o: bind
 
 networks:
   intra_network:

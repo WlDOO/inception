@@ -3,15 +3,15 @@ set -e
 
 WP_DIR="/var/www/html"
 
-echo "⏳ Attente de MariaDB..."
+echo "Attente de MariaDB..."
 until mysql -h "${DB_HOST}" -u"${MYSQL_USER}" -p"${MYSQL_PASSWORD}" -e "SELECT 1;" "${MYSQL_DATABASE}" > /dev/null 2>&1; do
-    echo "⏳ Base de données non prête, on attend encore..."
+    echo "Base de données non prête, on attend encore..."
     sleep 2
 done
 echo "✅ Base de données accessible !"
 
 if [ ! -f "$WP_DIR/wp-config.php" ]; then
-    echo "⚙️ Création de wp-config.php..."
+    echo "Création de wp-config.php..."
 
     cp "$WP_DIR/wp-config-sample.php" "$WP_DIR/wp-config.php"
     sed -i "s/database_name_here/${MYSQL_DATABASE}/" "$WP_DIR/wp-config.php"
@@ -20,9 +20,8 @@ if [ ! -f "$WP_DIR/wp-config.php" ]; then
     sed -i "s/localhost/${DB_HOST}/" "$WP_DIR/wp-config.php"
 fi
 
-echo "ici"
 if ! wp core is-installed --path="${WP_DIR}" --allow-root; then
-    echo "🚀 Installation WordPress..."
+    echo "Installation WordPress..."
 
     wp core install \
         --url="${WP_URL}" \
@@ -33,10 +32,15 @@ if ! wp core is-installed --path="${WP_DIR}" --allow-root; then
         --path=$WP_DIR \
         --skip-email \
     	--allow-root
+
+    wp user create "${EVAL_USER}" "${EVAL_EMAIL}" \
+	--role=author \
+    	--user_pass="${EVAL_PASSWORD}" \
+    	--path=$WP_DIR \
+	--allow-root
+
 fi
 
 chown -R www-data:www-data "$WP_DIR"
-
-echo "j arrive la"
 
 exec php-fpm7.4 -F
